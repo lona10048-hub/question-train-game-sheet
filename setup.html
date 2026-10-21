@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>선생님 설정 · 질문 기차 게임</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div id="brand"></div>
+      <div class="spacer"></div>
+      <a class="btn btn-cream btn-sm" href="index.html" id="back-link"><span id="back-ico"></span>처음으로</a>
+    </header>
+
+    <section class="card pad" aria-labelledby="t">
+      <span class="deco green" style="width:220px;height:220px;right:-80px;top:-90px"></span>
+      <div class="eyebrow">선생님 설정 · 구글 시트 버전</div>
+      <h1 id="t" style="font-size:38px;margin:10px 0 8px">내 구글 시트 연결하기</h1>
+      <p class="lead" style="margin-bottom:18px">우리 반 정식 수업은 <b>선생님 구글 시트</b>를 서버로 써요. 학생 질문이 선생님 시트의 <b>'질문 기록'</b> 탭에 차곡차곡 쌓이고, 선생님이 지우기 전까지 남아요.
+        처음 한 번만 하면 되고, <b>10분</b> 정도 걸려요.</p>
+      <div id="status"></div>
+    </section>
+
+    <section class="card pad" style="margin-top:18px" id="trial-card" hidden>
+      <div class="row" style="align-items:flex-start">
+        <div style="flex:1 1 320px">
+          <h2 class="section-title" style="font-size:24px">먼저 써 보고 싶다면: 체험 서버</h2>
+          <p class="section-desc" id="trial-desc"></p>
+        </div>
+        <a class="btn btn-apricot" href="teacher.html">체험 서버로 게임 만들기</a>
+      </div>
+    </section>
+
+    <ol class="steps-setup" style="padding:0;margin:22px 0 0">
+      <li class="setup-step">
+        <div class="sn">1</div>
+        <div>
+          <h3>질문 기차 시트 사본 만들기</h3>
+          <div id="copy-ready">
+            <ol>
+              <li><b>개인 Gmail 계정</b>으로 로그인한 상태에서 아래 <b>사본 만들기</b> 버튼을 눌러요. (학교 업무용 계정은 관리자가 막아 두었을 수 있어요)</li>
+              <li>"문서 사본을 만드시겠습니까?" 화면에서 <b>사본 만들기</b>를 누르면, 서버 코드가 들어 있는 시트가 내 드라이브에 생겨요.</li>
+              <li>시트 이름은 알아보기 쉽게 바꿔도 괜찮아요. 예: <b>질문 기차 게임 기록</b></li>
+            </ol>
+            <div class="row" style="margin-top:12px">
+              <a class="btn btn-primary" id="copy-link" href="#" target="_blank" rel="noopener"><span id="copy-sheet-ico"></span>사본 만들기</a>
+              <span class="hint" style="color:var(--ink-3)">새 탭에서 열려요. 이 화면은 그대로 두세요.</span>
+            </div>
+          </div>
+          <div id="copy-missing" hidden>
+            <div class="notice"><div><strong>사본 만들기 링크가 아직 준비되지 않았어요</strong>아래 <b>사본 만들기가 안 될 때: 직접 만들기</b>를 펼쳐 따라 해 주세요.</div></div>
+          </div>
+        </div>
+      </li>
+      <li class="setup-step">
+        <div class="sn">2</div>
+        <div>
+          <h3>웹 앱으로 배포하기</h3>
+          <ol>
+            <li>복사된 시트 위쪽 메뉴에서 <b>확장 프로그램 → Apps Script</b>를 눌러요. 새 창에 코드 편집기가 열려요. (코드는 이미 들어 있어요)</li>
+            <li>오른쪽 위 <b>배포 → 새 배포</b>를 눌러요.</li>
+            <li>"유형 선택" 옆 <b>톱니바퀴</b>를 눌러 <b>웹 앱</b>을 골라요.</li>
+            <li><b>다음 사용자 인증 정보로 실행: 나</b> / <b>액세스 권한이 있는 사용자: 모든 사용자</b>로 정하고 <b>배포</b>를 눌러요.
+              <br><span class="hint">"Google 계정이 있는 모든 사용자"가 아니라 그냥 <b>"모든 사용자"</b>예요. 그래야 학생 태블릿이 로그인 없이 들어와요.</span></li>
+            <li><b>액세스 승인</b> → 내 계정을 골라요. <b>"Google에서 확인하지 않은 앱"</b> 화면이 나오면 왼쪽 아래 <b>고급</b> → <b>질문 기차 서버(으)로 이동(안전하지 않음)</b> → <b>허용</b>을 눌러요.</li>
+            <li>화면에 나온 <b>웹 앱 URL</b>을 복사해요. <code>https://script.google.com/macros/s/…/exec</code> 처럼 <b>/exec</b>로 끝나요.</li>
+          </ol>
+          <div class="notice" style="margin-top:12px"><div><strong>경고 화면이 나와도 괜찮아요</strong>선생님 드라이브에 복사된 코드라서 구글 심사를 받지 않았다는 뜻이에요. 이 코드는 복사한 시트 하나에만 접근하고, 다른 파일이나 메일은 볼 수 없어요. 게임 만들기·시작·지우기 같은 선생님 기능은 다음 단계에서 정하는 비밀번호로 막혀 있어요.</div></div>
+        </div>
+      </li>
+      <li class="setup-step">
+        <div class="sn">3</div>
+        <div>
+          <h3>웹 앱 주소 붙여 넣고 선생님 비밀번호 정하기</h3>
+          <div class="field" style="margin-top:8px">
+            <label for="url">웹 앱 URL</label>
+            <input class="input" id="url" type="url" spellcheck="false" autocomplete="off" placeholder="https://script.google.com/macros/s/……/exec" style="font-size:17px">
+          </div>
+          <div class="field" style="margin-top:12px">
+            <label for="pw">선생님 비밀번호</label>
+            <input class="input" id="pw" type="password" autocomplete="new-password" placeholder="4글자 이상" style="font-size:19px;max-width:360px">
+            <span class="hint">처음 연결할 때 정한 비밀번호가 이 시트의 선생님 비밀번호가 돼요. 다른 컴퓨터에서는 같은 주소와 비밀번호를 넣으면 돼요.</span>
+          </div>
+          <div class="row" style="margin-top:14px">
+            <button type="button" class="btn btn-primary" id="save">저장하고 연결 확인</button>
+            <button type="button" class="btn btn-danger btn-sm" id="clear">이 컴퓨터의 연결 지우기</button>
+          </div>
+          <div id="result" style="margin-top:14px" aria-live="polite"></div>
+        </div>
+      </li>
+    </ol>
+
+    <details class="card pad manual-card" style="margin-top:22px" id="manual">
+      <summary class="section-title" style="font-size:22px">사본 만들기가 안 될 때: 직접 만들기</summary>
+      <p class="section-desc" style="margin-top:10px">사본 만들기 대신 새 시트에 코드를 직접 붙여 넣는 방법이에요. 아래 1~3을 한 뒤 위의 <b>2. 웹 앱으로 배포하기</b>부터 이어서 해요.</p>
+      <ol class="tip-list" style="list-style:decimal">
+        <li>개인 Gmail로 <a href="https://sheets.new" target="_blank" rel="noopener">새 구글 시트</a>를 만들어요.</li>
+        <li>시트 메뉴 <b>확장 프로그램 → Apps Script</b>를 열고, 위쪽 "제목 없는 프로젝트"를 눌러 이름을 <b>질문 기차 서버</b>로 바꿔요.</li>
+        <li>편집기의 <code>function myFunction() { }</code>을 모두 지우고, 아래 <b>코드 복사하기</b>로 복사한 코드를 붙여 넣은 뒤 <b>저장</b>(💾 또는 Ctrl+S)을 눌러요.</li>
+      </ol>
+      <div class="row" style="margin:14px 0 8px">
+        <button type="button" class="btn btn-primary btn-sm" id="copy-code"><span id="copy-ico"></span>코드 복사하기</button>
+        <a class="btn btn-cream btn-sm" href="gas/Code.gs" download="Code.gs"><span id="dl-ico"></span>Code.gs 파일 내려받기</a>
+        <span class="hint" style="color:var(--ink-3)" id="code-size"></span>
+      </div>
+      <details class="code-details">
+        <summary>코드 내용 펼쳐 보기</summary>
+        <pre class="rules-code" id="code"></pre>
+      </details>
+    </details>
+
+    <section class="card pad" style="margin-top:22px" aria-labelledby="tips">
+      <h2 class="section-title" id="tips">알아 두면 좋아요</h2>
+      <ul class="tip-list">
+        <li><b>질문 기록</b>: 시트의 '질문 기록' 탭에 게임 코드·판·모둠·칸·질문·쓴 사람이 쌓여요. 탭 이름과 열 순서는 바꾸지 말고, 필요 없는 줄은 지워도 괜찮아요.</li>
+        <li><b>새 버전 코드로 바꿀 때</b>: 편집기에 새 코드를 붙여 넣고 저장한 뒤 <b>배포 → 배포 관리 → 연필(수정) → 버전: 새 버전 → 배포</b>를 눌러요. 웹 앱 주소가 바뀌지 않아요. ("새 배포"를 다시 누르면 주소가 바뀌어요)</li>
+        <li><b>비밀번호를 잊었을 때</b>: Apps Script 편집기 위쪽 함수 칸에서 <b>resetTeacherPassword</b>를 골라 <b>▷ 실행</b>한 뒤, 이 화면에서 새 비밀번호를 정해요.</li>
+        <li><b>다른 컴퓨터에서 수업할 때</b>: 그 컴퓨터에서 이 화면을 열고 같은 웹 앱 주소와 비밀번호를 넣어요.</li>
+        <li><b>동시 사용</b>: 모둠 태블릿 8대와 선생님 화면 한 대를 기준으로 만들었어요. 선생님마다 자기 시트를 쓰는 것을 권해요.</li>
+      </ul>
+      <div class="row" style="margin-top:14px">
+        <button type="button" class="btn btn-ghost btn-sm" id="clear-practice">연습 모드 기록 지우기 (이 브라우저)</button>
+      </div>
+    </section>
+
+    <p class="foot">웹 앱 주소와 비밀번호는 이 브라우저에만 저장돼요.<br>학생들이 쓴 이름과 질문은 선생님의 구글 시트에만 저장돼요.</p>
+  </main>
+  <script type="module" src="js/setup.js"></script>
+</body>
+</html>
